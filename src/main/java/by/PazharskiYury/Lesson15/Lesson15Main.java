@@ -14,7 +14,6 @@ public class Lesson15Main {
         Task3.runDemo(driver);
         Task4.run(driver);
         Task5.run(driver);
-        driver.quit();
     }
 
 }
