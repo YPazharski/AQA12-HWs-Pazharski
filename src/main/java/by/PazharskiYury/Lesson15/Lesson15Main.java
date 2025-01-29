@@ -22,7 +22,7 @@ public class Lesson15Main {
 //        Task3.runDemo(driver);
 //        Task4.run(driver);
 //        driver.quit();
-        Task5.run(driver);
+        Task4.run(driver);
     }
 
 }
