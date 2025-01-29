@@ -1,6 +1,5 @@
 package by.PazharskiYury.Lesson15;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -33,14 +32,17 @@ public class Task3 {
     }
 
     public static void runDemo() {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().minimize();
-        driver.get("https://www.google.com/");
-        WebElement searchButton = driver.findElement(By.cssSelector("div[class='FPdoLc lJ9FBc'] input[name='btnK']"));
-        WebElement luckyButton = driver.findElement(By.cssSelector("div[class='FPdoLc lJ9FBc'] input[name='btnI']"));
+        WebDriver webDriver = new ChromeDriver();
+        webDriver.manage().window().minimize();
+        runDemo(webDriver);
+        webDriver.close();
+    }
+
+    public static void runDemo(@NotNull WebDriver webDriver) {
+        webDriver.get("https://www.google.com/");
+        WebElement searchButton = webDriver.findElement(By.cssSelector("div[class='FPdoLc lJ9FBc'] input[name='btnK']"));
+        WebElement luckyButton = webDriver.findElement(By.cssSelector("div[class='FPdoLc lJ9FBc'] input[name='btnI']"));
         Task3.printWebElementsInfo(searchButton, luckyButton);
-        driver.close();
     }
 
 }

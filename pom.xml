@@ -35,11 +35,11 @@
       <artifactId>webdrivermanager</artifactId>
       <version>5.9.2</version>
     </dependency>
+
     <dependency>
       <groupId>org.jetbrains</groupId>
       <artifactId>annotations</artifactId>
       <version>24.0.0</version>
-      <scope>test</scope>
     </dependency>
 
   </dependencies>

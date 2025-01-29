@@ -1,6 +1,6 @@
 package by.PazharskiYury.Lesson15;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,28 +12,31 @@ public class Task2 {
     private static final String[] URLS = new String[]{
             "http://www.automationpractice.pl/index.php",
             "https://zoo.waw.pl/",
-            "https://www.w3schools.com/",
+            //"https://www.w3schools.com/",
             "https://www.clickspeedtester.com/click-counter/",
             "https://andersenlab.com/"
     };
 
     public static void run() {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(URLS[0]);
+        WebDriver webDriver = new ChromeDriver();
+        webDriver.manage().window().maximize();
+        run(webDriver);
+    }
+
+    public static void run(@NotNull WebDriver webDriver) {
+        webDriver.get(URLS[0]);
         for (int i = 1; i < URLS.length; i++) {
-            driver.switchTo().newWindow(WindowType.WINDOW).get(URLS[i]);
+            webDriver.switchTo().newWindow(WindowType.WINDOW).get(URLS[i]);
         }
 
-        Set<String> windowHandles = driver.getWindowHandles();
+        Set<String> windowHandles = webDriver.getWindowHandles();
         for (String windowHandle : windowHandles) {
-            driver.switchTo().window(windowHandle);
-            String title = driver.getTitle();
+            webDriver.switchTo().window(windowHandle);
+            String title = webDriver.getTitle();
             System.out.println(title);
-            System.out.println(driver.getCurrentUrl());
+            System.out.println(webDriver.getCurrentUrl());
             if (title != null && title.contains("Zoo")) {
-                driver.close();
+                webDriver.close();
             }
         }
     }
