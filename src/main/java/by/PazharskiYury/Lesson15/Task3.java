@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class Task3 {
 
@@ -29,13 +28,6 @@ public class Task3 {
                         : (element1Square < element2Square ? "Element 2" : "None of the elements"));
 
         System.out.println();
-    }
-
-    public static void runDemo() {
-        WebDriver webDriver = new ChromeDriver();
-        webDriver.manage().window().minimize();
-        runDemo(webDriver);
-        webDriver.close();
     }
 
     public static void runDemo(@NotNull WebDriver webDriver) {
