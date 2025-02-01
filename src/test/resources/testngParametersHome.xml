@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="testngParametersHome" parallel="tests" thread-count="3">
+
+    <parameter name="password" value="qwerty12"/>
+
+    <test name="Red">
+        <parameter name="email" value="red@rockstar.com"/>
+        <classes>
+            <class name="by.PazharskiYury.loginPage.LoginParametersTest"/>
+        </classes>
+    </test>
+
+    <test name="Dead">
+        <parameter name="email" value="dead@rockstar.com"/>
+        <classes>
+            <class name="by.PazharskiYury.loginPage.LoginParametersTest"/>
+        </classes>
+    </test>
+
+    <test name="Redemption">
+        <parameter name="email" value="redemption@rockstar.com"/>
+        <classes>
+            <class name="by.PazharskiYury.loginPage.LoginParametersTest"/>
+        </classes>
+    </test>
+
+</suite>

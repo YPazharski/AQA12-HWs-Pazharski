@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="testngGroupingHome">
+
     <test name="First group test">
         <groups>
             <run>
@@ -11,6 +12,7 @@
             <class name="by.PazharskiYury.grouping.Groups"/>
         </classes>
     </test>
+
     <test name="Second group test">
         <groups>
             <run>
@@ -21,4 +23,5 @@
             <class name="by.PazharskiYury.grouping.Groups"/>
         </classes>
     </test>
+
 </suite>
