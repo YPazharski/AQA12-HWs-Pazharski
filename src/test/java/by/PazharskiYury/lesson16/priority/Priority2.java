@@ -1,42 +1,42 @@
-package by.PazharskiYury.priority;
+package by.PazharskiYury.lesson16.priority;
 
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class Priority1 {
+public class Priority2 {
 
-    @Test(priority = 7)
+    @Test(dependsOnMethods = "b", alwaysRun = true)
     public void a() {
         assertTrue(true);
     }
 
-    @Test(priority = 6)
+    @Test(dependsOnMethods = "c", alwaysRun = true)
     public void b() {
         assertTrue(true);
     }
 
-    @Test(priority = 5)
+    @Test(dependsOnMethods = "d", alwaysRun = true)
     public void c() {
         assertTrue(true);
     }
 
-    @Test(priority = 4)
+    @Test(dependsOnMethods = "e", alwaysRun = true)
     public void d() {
         assertTrue(true);
     }
 
-    @Test(priority = 3)
+    @Test(dependsOnMethods = "f", alwaysRun = true)
     public void e() {
         assertTrue(true);
     }
 
-    @Test(priority = 2)
+    @Test(dependsOnMethods = "g", alwaysRun = true)
     public void f() {
         assertTrue(true);
     }
 
-    @Test(priority = 1)
+    @Test(alwaysRun = true)
     public void g() {
         assertTrue(true);
     }

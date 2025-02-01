@@ -7,21 +7,21 @@
     <test name="Red">
         <parameter name="email" value="red@rockstar.com"/>
         <classes>
-            <class name="by.PazharskiYury.loginPage.LoginParametersTest"/>
+            <class name="by.PazharskiYury.lesson16.loginPage.LoginParametersTest"/>
         </classes>
     </test>
 
     <test name="Dead">
         <parameter name="email" value="dead@rockstar.com"/>
         <classes>
-            <class name="by.PazharskiYury.loginPage.LoginParametersTest"/>
+            <class name="by.PazharskiYury.lesson16.loginPage.LoginParametersTest"/>
         </classes>
     </test>
 
     <test name="Redemption">
         <parameter name="email" value="redemption@rockstar.com"/>
         <classes>
-            <class name="by.PazharskiYury.loginPage.LoginParametersTest"/>
+            <class name="by.PazharskiYury.lesson16.loginPage.LoginParametersTest"/>
         </classes>
     </test>
 

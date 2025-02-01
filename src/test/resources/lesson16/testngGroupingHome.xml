@@ -9,7 +9,7 @@
             </run>
         </groups>
         <classes>
-            <class name="by.PazharskiYury.grouping.Groups"/>
+            <class name="by.PazharskiYury.lesson16.grouping.Groups"/>
         </classes>
     </test>
 
@@ -20,7 +20,7 @@
             </run>
         </groups>
         <classes>
-            <class name="by.PazharskiYury.grouping.Groups"/>
+            <class name="by.PazharskiYury.lesson16.grouping.Groups"/>
         </classes>
     </test>
 

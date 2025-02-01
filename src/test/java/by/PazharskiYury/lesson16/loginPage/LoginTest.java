@@ -1,4 +1,4 @@
-package by.PazharskiYury.loginPage;
+package by.PazharskiYury.lesson16.loginPage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

@@ -1,4 +1,4 @@
-package by.PazharskiYury.parallelismus;
+package by.PazharskiYury.lesson16.parallelismus;
 
 import org.testng.annotations.Test;
 

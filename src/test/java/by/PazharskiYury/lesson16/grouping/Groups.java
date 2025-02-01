@@ -1,4 +1,4 @@
-package by.PazharskiYury.grouping;
+package by.PazharskiYury.lesson16.grouping;
 
 import org.testng.annotations.Test;
 

@@ -3,8 +3,8 @@
 <suite name="testngParallelHome" parallel="classes" thread-count="2">
     <test name="Parallel">
         <classes>
-            <class name="by.PazharskiYury.parallelismus.ParallelClass1"/>
-            <class name="by.PazharskiYury.parallelismus.ParallelClass2"/>
+            <class name="by.PazharskiYury.lesson16.parallelismus.ParallelClass1"/>
+            <class name="by.PazharskiYury.lesson16.parallelismus.ParallelClass2"/>
         </classes>
     </test>
 </suite>
