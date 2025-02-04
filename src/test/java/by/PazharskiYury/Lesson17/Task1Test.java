@@ -85,7 +85,7 @@ public class Task1Test {
         browser
                 .findElement(SEARCH_BUTTON)
                 .click();
-        assertTrue(elementIsLoadedAndVisible(browser, wait, EXPECTED_SEARCH_RESULTS));
+        assertTrue(elementIsLoadedAndVisible(wait, EXPECTED_SEARCH_RESULTS));
     }
 
     @AfterMethod

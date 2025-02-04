@@ -47,7 +47,7 @@ public class TestHelper {
         WebDriverManager.chromedriver().setup();
     }
 
-    public static boolean elementIsLoadedAndVisible(@NotNull WebDriver browser, @NotNull WebDriverWait wait, @NotNull By locator) {
+    public static boolean elementIsLoadedAndVisible(@NotNull WebDriverWait wait, @NotNull By locator) {
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
             return true;
