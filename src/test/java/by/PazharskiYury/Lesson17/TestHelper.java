@@ -21,18 +21,12 @@ public class TestHelper {
 
     private static void login(@NotNull WebDriver browser,@NotNull WebDriverWait wait) {
         browser.get(URL);
-        wait.until(presenceOfElementLocated(EMAIL_FIELD));
-        browser
-                .findElement(EMAIL_FIELD)
-                .sendKeys(EMAIL);
-        wait.until(presenceOfElementLocated(PASSWORD_FIELD));
-        browser
-                .findElement(PASSWORD_FIELD)
-                .sendKeys(PASSWORD);
-        wait.until(presenceOfElementLocated(SIGN_IN_BUTTON));
-        browser
-                .findElement(SIGN_IN_BUTTON)
-                .click();
+        WebElement emailField = wait.until(presenceOfElementLocated(EMAIL_FIELD));
+        emailField.sendKeys(EMAIL);
+        WebElement passwordField = wait.until(presenceOfElementLocated(PASSWORD_FIELD));
+        passwordField.sendKeys(PASSWORD);
+        WebElement signInButton = wait.until(presenceOfElementLocated(SIGN_IN_BUTTON));
+        signInButton.click();
         wait.until(urlToBe(URL));
     }
 
