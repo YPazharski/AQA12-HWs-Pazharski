@@ -21,7 +21,7 @@ import static org.testng.Assert.*;
 
 public class Task1Test {
 
-    private static final By SELECT_BUTTON = By.cssSelector("div[class='flex flex-col text-sm text-black bg-white shadow-custom absolute mt-12 cursor-pointer'] div:nth-child(1)");
+    private static final By SELECT_BUTTON = By.xpath("//div[normalize-space()='Select']");
     private static final By COUNTRY_SELECTOR = By.cssSelector("select[title='Select country']");
     private static final String COUNTRY_SELECTION = "USA";
     private static final By LANGUAGE_SELECTOR = By.cssSelector("select[title='Select language']");
@@ -49,42 +49,32 @@ public class Task1Test {
     @BeforeMethod()
     public void configureBrowser() {
         browser = new ChromeDriver();
-        browser.manage().window().minimize();
+        browser.manage().window().maximize();
         wait = new WebDriverWait(browser, Duration.ofSeconds(2));
     }
 
     @Test
     public void shouldDisplayCorrectMessageWhenCoursesNotFound() {
         loginAndExpandAQAButton(browser, wait);
-        wait.until(visibilityOfElementLocated(SELECT_BUTTON));
-        browser
-                .findElement(SELECT_BUTTON)
-                .click();
-        wait.until(visibilityOfElementLocated(COUNTRY_SELECTOR));
-        Select countrySelector = new Select(browser.findElement(COUNTRY_SELECTOR));
+        WebElement selectButton = wait.until(visibilityOfElementLocated(SELECT_BUTTON));
+        selectButton.click();
+        Select countrySelector = new Select(wait.until(visibilityOfElementLocated(COUNTRY_SELECTOR)));
         countrySelector.selectByVisibleText(COUNTRY_SELECTION);
-        wait.until(visibilityOfElementLocated(LANGUAGE_SELECTOR));
-        Select languageSelector = new Select(browser.findElement(LANGUAGE_SELECTOR));
+        Select languageSelector = new Select(wait.until(visibilityOfElementLocated(LANGUAGE_SELECTOR)));
         languageSelector.selectByVisibleText(LANGUAGE_SELECTION);
-        wait.until(visibilityOfElementLocated(TYPE_SELECTOR));
-        Select typeSelector = new Select(browser.findElement(TYPE_SELECTOR));
+        Select typeSelector = new Select(wait.until(visibilityOfElementLocated(TYPE_SELECTOR)));
         typeSelector.selectByVisibleText(TYPE_SELECTION);
-        wait.until(visibilityOfElementLocated(START_DATE_INPUT));
-        WebElement startDateInput = browser.findElement(START_DATE_INPUT);
+        WebElement startDateInput = wait.until(visibilityOfElementLocated(START_DATE_INPUT));
         LocalDate nextMonday = getNextMondayDate(LocalDate.now());
         startDateInput.sendKeys(nextMonday.format(DATE_INPUT_FORMAT));
-        wait.until(visibilityOfElementLocated(END_DATE_INPUT));
-        WebElement endDateInput = browser.findElement(END_DATE_INPUT);
+        WebElement endDateInput = wait.until(visibilityOfElementLocated(END_DATE_INPUT));
         endDateInput.sendKeys(nextMonday.plusWeeks(2).format(DATE_INPUT_FORMAT));
-        wait.until(visibilityOfElementLocated(COURSES_SELECTOR));
-        Select coursesSelector = new Select(browser.findElement(COURSES_SELECTOR));
+        Select coursesSelector = new Select(wait.until(visibilityOfElementLocated(COURSES_SELECTOR)));
         Arrays
                 .stream(COURSES_SELECTIONS)
                 .forEach(coursesSelector::selectByVisibleText);
-        wait.until(visibilityOfElementLocated(SEARCH_BUTTON));
-        browser
-                .findElement(SEARCH_BUTTON)
-                .click();
+        WebElement searchButton = wait.until(visibilityOfElementLocated(SEARCH_BUTTON));
+        searchButton.click();
         assertTrue(elementIsLoadedAndVisible(wait, EXPECTED_SEARCH_RESULTS));
     }
 
