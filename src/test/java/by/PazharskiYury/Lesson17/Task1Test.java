@@ -37,7 +37,8 @@ public class Task1Test {
             "AQA Python"
     };
     private static final By SEARCH_BUTTON = By.name("SelectPageSearchButton");
-    private static final By EXPECTED_SEARCH_RESULTS = By.xpath("//*[contains(text(), 'Unfortunately, we did not find any courses matching your chosen criteria.')]");
+    private static final By EXPECTED_SEARCH_RESULTS = By.xpath("""
+            //*[contains(text(), 'Unfortunately, we did not find any courses matching your chosen criteria.')]""");
     private static WebDriver browser;
     private static WebDriverWait wait;
 
@@ -49,7 +50,7 @@ public class Task1Test {
     @BeforeMethod()
     public void configureBrowser() {
         browser = new ChromeDriver();
-        browser.manage().window().minimize();
+        browser.manage().window().maximize();
         wait = new WebDriverWait(browser, Duration.ofSeconds(2));
     }
 
