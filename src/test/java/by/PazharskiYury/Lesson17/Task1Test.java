@@ -56,14 +56,15 @@ public class Task1Test {
     @Test
     public void shouldDisplayCorrectMessageWhenCoursesNotFound() {
         loginAndExpandAQAButton(browser, wait);
-        WebElement selectButton = wait.until(visibilityOfElementLocated(SELECT_BUTTON));
-        selectButton.click();
-        Select countrySelector = new Select(wait.until(visibilityOfElementLocated(COUNTRY_SELECTOR)));
-        countrySelector.selectByVisibleText(COUNTRY_SELECTION);
-        Select languageSelector = new Select(wait.until(visibilityOfElementLocated(LANGUAGE_SELECTOR)));
-        languageSelector.selectByVisibleText(LANGUAGE_SELECTION);
-        Select typeSelector = new Select(wait.until(visibilityOfElementLocated(TYPE_SELECTOR)));
-        typeSelector.selectByVisibleText(TYPE_SELECTION);
+        wait
+                .until(visibilityOfElementLocated(SELECT_BUTTON))
+                .click();
+        new Select(wait.until(visibilityOfElementLocated(COUNTRY_SELECTOR)))
+                .selectByVisibleText(COUNTRY_SELECTION);
+        new Select(wait.until(visibilityOfElementLocated(LANGUAGE_SELECTOR)))
+                .selectByVisibleText(LANGUAGE_SELECTION);
+        new Select(wait.until(visibilityOfElementLocated(TYPE_SELECTOR)))
+                .selectByVisibleText(TYPE_SELECTION);
         WebElement startDateInput = wait.until(visibilityOfElementLocated(START_DATE_INPUT));
         LocalDate nextMonday = getNextMondayDate(LocalDate.now());
         startDateInput.sendKeys(nextMonday.format(DATE_INPUT_FORMAT));
@@ -73,8 +74,9 @@ public class Task1Test {
         Arrays
                 .stream(COURSES_SELECTIONS)
                 .forEach(coursesSelector::selectByVisibleText);
-        WebElement searchButton = wait.until(visibilityOfElementLocated(SEARCH_BUTTON));
-        searchButton.click();
+        wait
+                .until(visibilityOfElementLocated(SEARCH_BUTTON))
+                .click();
         assertTrue(elementIsLoadedAndVisible(wait, EXPECTED_SEARCH_RESULTS));
     }
 
