@@ -49,7 +49,7 @@ public class Task1Test {
     @BeforeMethod()
     public void configureBrowser() {
         browser = new ChromeDriver();
-        browser.manage().window().maximize();
+        browser.manage().window().minimize();
         wait = new WebDriverWait(browser, Duration.ofSeconds(2));
     }
 

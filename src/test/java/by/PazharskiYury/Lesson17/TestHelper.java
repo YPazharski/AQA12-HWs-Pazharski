@@ -21,20 +21,22 @@ public class TestHelper {
 
     private static void login(@NotNull WebDriver browser,@NotNull WebDriverWait wait) {
         browser.get(URL);
-        WebElement emailField = wait.until(presenceOfElementLocated(EMAIL_FIELD));
-        emailField.sendKeys(EMAIL);
-        WebElement passwordField = wait.until(presenceOfElementLocated(PASSWORD_FIELD));
-        passwordField.sendKeys(PASSWORD);
-        WebElement signInButton = wait.until(presenceOfElementLocated(SIGN_IN_BUTTON));
-        signInButton.click();
+        wait
+                .until(presenceOfElementLocated(EMAIL_FIELD))
+                .sendKeys(EMAIL);
+        wait
+                .until(presenceOfElementLocated(PASSWORD_FIELD))
+                .sendKeys(PASSWORD);
+        wait
+                .until(presenceOfElementLocated(SIGN_IN_BUTTON))
+                .click();
         wait.until(urlToBe(URL));
     }
 
     public static void loginAndExpandAQAButton(@NotNull WebDriver browser,@NotNull WebDriverWait wait) {
         login(browser, wait);
-        wait.until(visibilityOfElementLocated(AQA_PRACTICE_EXPAND_BUTTON));
-        browser
-                .findElement(AQA_PRACTICE_EXPAND_BUTTON)
+        wait
+                .until(visibilityOfElementLocated(AQA_PRACTICE_EXPAND_BUTTON))
                 .click();
     }
 
