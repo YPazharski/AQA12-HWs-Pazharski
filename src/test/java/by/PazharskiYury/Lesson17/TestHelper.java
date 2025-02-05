@@ -17,6 +17,7 @@ public class TestHelper {
     private static final By PASSWORD_FIELD = By.name("password");
     private static final By SIGN_IN_BUTTON = By.cssSelector("button[type='submit']");
     public static final By AQA_PRACTICE_EXPAND_BUTTON = By.cssSelector("img[alt='Expand']");
+    private static boolean driverIsSetUp = false;
 
     private static void login(@NotNull WebDriver browser,@NotNull WebDriverWait wait) {
         browser.get(URL);
@@ -44,7 +45,10 @@ public class TestHelper {
     }
 
     public static void setupDriver() {
-        WebDriverManager.chromedriver().setup();
+        if (!driverIsSetUp) {
+            WebDriverManager.chromedriver().setup();
+            driverIsSetUp = true;
+        }
     }
 
     public static boolean elementIsLoadedAndVisible(@NotNull WebDriverWait wait, @NotNull By locator) {
