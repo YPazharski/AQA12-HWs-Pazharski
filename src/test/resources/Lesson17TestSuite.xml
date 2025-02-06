@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Lesson 17" thread-count="3" parallel="tests">
+
+    <test name="Task 1">
+        <classes>
+            <class name="by.PazharskiYury.Lesson17.Task1Test"/>
+        </classes>
+    </test>
+
+    <test name="Task 2">
+        <classes>
+            <class name="by.PazharskiYury.Lesson17.Task2Test"/>
+        </classes>
+    </test>
+
+    <test name="Task 3">
+        <classes>
+            <class name="by.PazharskiYury.Lesson17.Task3Test"/>
+        </classes>
+    </test>
+
+</suite>
