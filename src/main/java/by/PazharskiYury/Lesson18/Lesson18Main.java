@@ -9,9 +9,8 @@ public class Lesson18Main {
     public static void main(String[] args) {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
-        new LoginPage(driver)
-                .open()
-                .signIn("deepseek@nvidia.com", "qwerty12");
+        MainPage mainPage = new MainPage(driver);
+        mainPage.open("deepseek@nvidia.com", "qwerty12");
     }
 
 }
