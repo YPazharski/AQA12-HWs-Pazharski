@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+@SuppressWarnings({"UnusedReturnValue", "unused"})
 public class LoginPage {
 
     private static final String URL = "https://qa-course-01.andersenlab.com/login";
