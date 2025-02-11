@@ -6,11 +6,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class Lesson18Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
-        MainPage mainPage = new MainPage(driver);
-        mainPage.open("deepseek@nvidia.com", "qwerty12");
+        MainPage
+                .open(driver, "okuh@mail.ru", "qwerty12")
+                .clickEditProfileButton()
+                .setFieldValue(EditProfileField.FIRST_NAME, "ooo")
+                .clickSave()
+                .clickEditProfileButton();
     }
 
 }

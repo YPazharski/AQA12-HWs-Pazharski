@@ -25,14 +25,14 @@ public class LoginPage {
     @FindBy(css = "button[type='submit']")
     private WebElement signInButton;
 
-    public LoginPage(WebDriver driver) {
+    private LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public LoginPage open() {
+    public static LoginPage open(WebDriver driver) {
         driver.get(URL);
-        return this;
+        return new LoginPage(driver);
     }
 
     public boolean trySignIn(String email, String password) {
