@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Main page parallel tests" parallel="methods" thread-count="6">
+
+    <test name="maipe0 - maipe9">
+        <classes>
+            <class name="by.PazharskiYury.MainPageTests" />
+        </classes>
+    </test>
+
+</suite>
