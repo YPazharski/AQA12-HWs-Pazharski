@@ -1,21 +1,24 @@
 package by.PazharskiYury.Lesson18;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-import java.time.LocalDate;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 //@SuppressWarnings({"UnusedReturnValue", "unused"})
 public class MainPage {
 
     public static final String URL = "https://qa-course-01.andersenlab.com/";
-    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
     private final WebDriver driver;
 
     @FindBy(css = "img[alt='Edit']")
@@ -84,6 +87,15 @@ public class MainPage {
         @FindBy(css = "img[alt='Close']")
         private  WebElement closeButton;
 
+        @FindBy(css = "div[class='text-lg font-normal text-[20px] text-[#020303]'] span")
+        private WebElement calendarSectionText;
+
+        @FindBy(css = "img[alt='arrow_right']")
+        private WebElement calendarRightArrowButton;
+
+        @FindBy(css = "img[alt='arrow_left']")
+        private WebElement calendarLeftArrowButton;
+
         private EditProfileForm() {
             PageFactory.initElements(driver, this);
         }
@@ -105,17 +117,41 @@ public class MainPage {
             return field.getDomProperty("value");
         }
 
-        public EditProfileForm setFieldValue(EditProfileField field, String newValue) {
+        public EditProfileForm writeFieldValue(EditProfileField field, String newValue) {
             WebElement fieldElement = getWebField(field);
-            return setFieldValue(fieldElement, newValue);
+            return writeFieldValue(fieldElement, newValue);
         }
 
-        public EditProfileForm setDateOfBirth(LocalDate newDate) {
-            setFieldValue(EditProfileField.DATE_OF_BIRTH, newDate.format(DATE_FORMAT));
+        public EditProfileForm writeDateOfBirth(LocalDate newDate) {
+            writeFieldValue(EditProfileField.DATE_OF_BIRTH, newDate.format(DATE_FORMAT));
             return this;
         }
 
-        private EditProfileForm setFieldValue(WebElement field, String newValue) {
+        public LocalDate getDateOfBirth() {
+            String date = getFieldValue(EditProfileField.DATE_OF_BIRTH);
+            return LocalDate.parse(date, MainPage.DATE_FORMAT);
+        }
+
+        public EditProfileForm selectDateOfBirth(LocalDate newDate) {
+            dateOfBirthField.click();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+            DateTimeFormatter calendarSectionFormat = DateTimeFormatter.ofPattern("MMM yyyy", Locale.ENGLISH);
+            YearMonth calendarYearMonth = YearMonth.parse(calendarSectionText.getText(), calendarSectionFormat);
+            YearMonth newYearMonth = YearMonth.of(newDate.getYear(), newDate.getMonthValue());
+            while (calendarYearMonth.isBefore(newYearMonth)) {
+                wait.until(ExpectedConditions.elementToBeClickable(calendarRightArrowButton)).click();
+                calendarYearMonth = YearMonth.parse(calendarSectionText.getText(), calendarSectionFormat);
+            }
+            while (calendarYearMonth.isAfter(newYearMonth)) {
+                wait.until(ExpectedConditions.elementToBeClickable(calendarLeftArrowButton)).click();
+                calendarYearMonth = YearMonth.parse(calendarSectionText.getText(), calendarSectionFormat);
+            }
+            By dateSelector = By.xpath(String.format("//span[normalize-space()='%d']", newDate.getDayOfMonth()));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(dateSelector)).click();
+            return this;
+        }
+
+        private EditProfileForm writeFieldValue(WebElement field, String newValue) {
             clearFieldValue(field);
             field.sendKeys(newValue);
             return this;
@@ -129,7 +165,7 @@ public class MainPage {
         public MainPage clickSave() throws FailedSaveProfileInfoException {
             if (saveButton.isEnabled()) {
                 saveButton.click();
-                new Actions(driver).pause(Duration.ofMillis(200)).build().perform(); //without this pause old values are displayed in profile info and in edit fields if the edit form is opened again immediately after clicking Save button.
+                new Actions(driver).pause(Duration.ofMillis(300)).build().perform(); //without this pause old values are displayed in profile info and in edit fields if the edit form is opened again immediately after clicking Save button. Date of birth picked from calendar updates especially slow.
                 return MainPage.this;
             }
             else {
@@ -140,11 +176,13 @@ public class MainPage {
 
         public MainPage clickCancel() {
             cancelButton.click();
+            new Actions(driver).pause(Duration.ofMillis(300)).build().perform();
             return MainPage.this;
         }
 
         public  MainPage clickClose() {
             closeButton.click();
+            new Actions(driver).pause(Duration.ofMillis(300)).build().perform();
             return MainPage.this;
         }
 
