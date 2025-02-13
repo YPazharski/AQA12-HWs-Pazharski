@@ -1,7 +1,5 @@
-package by.PazharskiYury;
+package by.PazharskiYury.Lesson18;
 
-import by.PazharskiYury.Lesson18.EditProfileField;
-import by.PazharskiYury.Lesson18.MainPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

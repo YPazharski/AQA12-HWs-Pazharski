@@ -14,7 +14,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-//@SuppressWarnings({"UnusedReturnValue", "unused"})
+@SuppressWarnings({"UnusedReturnValue", "unused"})
 public class MainPage {
 
     public static final String URL = "https://qa-course-01.andersenlab.com/";
@@ -35,7 +35,7 @@ public class MainPage {
         PageFactory.initElements(driver, this);
     }
 
-    public static MainPage open(WebDriver driver, String accountEmail, String accountPassword) throws FailedLoginException{
+    public static MainPage open(WebDriver driver, String accountEmail, String accountPassword) throws FailedLoginException {
         LoginPage loginPage = LoginPage.open(driver);
         if (!loginPage.trySignIn(accountEmail, accountPassword)) {
             throw new FailedLoginException(accountEmail, accountPassword);
@@ -47,16 +47,20 @@ public class MainPage {
         return profileNameText.getText();
     }
 
+    public String getProfileDateOfBirthText() {
+        return profileDateOfBirtText.getText();
+    }
+
     public LocalDate getProfileDateOfBirth() {
-        return LocalDate.parse(profileDateOfBirtText.getText(), DATE_FORMAT);
+        return LocalDate.parse(getProfileDateOfBirthText(), DATE_FORMAT);
     }
 
     public String getProfileFirstName() {
-        return  getProfileName().split(" ")[0];
+        return getProfileName().split(" ")[0];
     }
 
     public String getProfileLastName() {
-        return  getProfileName().split(" ")[1];
+        return getProfileName().split(" ")[1];
     }
 
     public EditProfileForm clickEditProfileButton() {
@@ -67,25 +71,25 @@ public class MainPage {
     public class EditProfileForm {
 
         @FindBy(name = "firstName")
-        private  WebElement firstNameField;
+        private WebElement firstNameField;
 
         @FindBy(name = "lastName")
-        private  WebElement lastNameField;
+        private WebElement lastNameField;
 
         @FindBy(name = "email")
-        private  WebElement emailField;
+        private WebElement emailField;
 
         @FindBy(name = "dateOfBirth")
-        private  WebElement dateOfBirthField;
+        private WebElement dateOfBirthField;
 
         @FindBy(css = "button[type='submit']")
-        private  WebElement saveButton;
+        private WebElement saveButton;
 
         @FindBy(css = "button[type='button']")
-        private  WebElement cancelButton;
+        private WebElement cancelButton;
 
         @FindBy(css = "img[alt='Close']")
-        private  WebElement closeButton;
+        private WebElement closeButton;
 
         @FindBy(css = "div[class='text-lg font-normal text-[20px] text-[#020303]'] span")
         private WebElement calendarSectionText;
@@ -167,8 +171,7 @@ public class MainPage {
                 saveButton.click();
                 new Actions(driver).pause(Duration.ofMillis(300)).build().perform(); //without this pause old values are displayed in profile info and in edit fields if the edit form is opened again immediately after clicking Save button. Date of birth picked from calendar updates especially slow.
                 return MainPage.this;
-            }
-            else {
+            } else {
                 throw new FailedSaveProfileInfoException(
                         "Save button can't be clicked. Perhaps some of fields have invalid value");
             }
@@ -180,7 +183,7 @@ public class MainPage {
             return MainPage.this;
         }
 
-        public  MainPage clickClose() {
+        public MainPage clickClose() {
             closeButton.click();
             new Actions(driver).pause(Duration.ofMillis(300)).build().perform();
             return MainPage.this;
