@@ -35,12 +35,14 @@ public class MainPageTestsDryAlternative {
     }
 
     @BeforeMethod
+    @Step("Открыть браузер")
     public void initializeDriver() {
         driver = new ChromeDriver();
         driver.manage().window().minimize();
     }
 
     @BeforeMethod(dependsOnMethods = "initializeDriver")
+    @Step("Открыть главную страницу и нажать на кнопку редактирования профиля")
     public void initializeEditProfileForm() {
         editProfileForm = MainPage
                 .open(driver, EMAIL, PASSWORD)
@@ -48,6 +50,7 @@ public class MainPageTestsDryAlternative {
     }
 
     @AfterMethod
+    @Step("Закрыть браузер")
     public void quitDriver() {
         driver.quit();
     }
@@ -175,7 +178,7 @@ public class MainPageTestsDryAlternative {
     @Test
     @Description("Кнопка \"Закрыть\" в окне изменения данных профиля сбрасывает все изменения в поле \"Last name\"")
     @Severity(CRITICAL)
-    @Story("Сохранить изменения данных профиля")
+    @Story("Отменить изменения при редактировании данных профиля")
     @Issue("https://github.com/YPazharski/AQA12-HWs-Pazharski/blob/d9ceeeea359568fa97d4bd5021801d11b7cf941c/src/test/resources/Lesson18/Lesson_14_Test_cases.xlsx")
     public void maipe8() {
         checkValuesAfterWriteToEditProfileFormField("Name", "NoName",
@@ -187,7 +190,7 @@ public class MainPageTestsDryAlternative {
     @Test
     @Description("Кнопка \"Закрыть\" в окне изменения данных профиля сбрасывает все изменения в поле \"Date of Birth\"")
     @Severity(CRITICAL)
-    @Story("Сохранить изменения данных профиля")
+    @Story("Отменить изменения при редактировании данных профиля")
     @Issue("https://github.com/YPazharski/AQA12-HWs-Pazharski/blob/d9ceeeea359568fa97d4bd5021801d11b7cf941c/src/test/resources/Lesson18/Lesson_14_Test_cases.xlsx")
     public void maipe9() {
         String newDate = LocalDate.of(1996, 12, 20).format(MainPage.DATE_FORMAT);

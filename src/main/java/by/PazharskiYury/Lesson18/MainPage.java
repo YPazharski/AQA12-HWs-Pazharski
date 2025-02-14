@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import io.qameta.allure.*;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +36,7 @@ public class MainPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Открыть главную страницу")
     public static MainPage open(WebDriver driver, String accountEmail, String accountPassword) throws FailedLoginException {
         LoginPage loginPage = LoginPage.open(driver);
         if (!loginPage.trySignIn(accountEmail, accountPassword)) {
@@ -63,6 +65,7 @@ public class MainPage {
         return getProfileName().split(" ")[1];
     }
 
+    @Step("Нажать кнопку редактирования профиля")
     public EditProfileForm clickEditProfileButton() {
         profileEditButton.click();
         return new EditProfileForm();
@@ -123,6 +126,7 @@ public class MainPage {
 
         public EditProfileForm writeFieldValue(EditProfileField field, String newValue) {
             WebElement fieldElement = getWebField(field);
+            Allure.step(String.format("Запись значения \"%s\" в поле %s формы редактирования профиля...", newValue, field.name()));
             return writeFieldValue(fieldElement, newValue);
         }
 
@@ -136,6 +140,7 @@ public class MainPage {
             return LocalDate.parse(date, MainPage.DATE_FORMAT);
         }
 
+        @Step("Выбор даты рождения в календаре в форме редактирования профиля")
         public EditProfileForm selectDateOfBirth(LocalDate newDate) {
             dateOfBirthField.click();
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
@@ -166,6 +171,7 @@ public class MainPage {
             field.sendKeys(Keys.DELETE);
         }
 
+        @Step("Нажать кнопку \"Save\" в форме редактирования профиля")
         public MainPage clickSave() throws FailedSaveProfileInfoException {
             if (saveButton.isEnabled()) {
                 saveButton.click();
@@ -177,12 +183,14 @@ public class MainPage {
             }
         }
 
+        @Step("Нажать кнопку \"Cancel\" в форме редактирования профиля")
         public MainPage clickCancel() {
             cancelButton.click();
             new Actions(driver).pause(Duration.ofMillis(300)).build().perform();
             return MainPage.this;
         }
 
+        @Step("Нажать кнопку \"Close\" (кнопка крестика справа вверху формы) в форме редактирования профиля")
         public MainPage clickClose() {
             closeButton.click();
             new Actions(driver).pause(Duration.ofMillis(300)).build().perform();

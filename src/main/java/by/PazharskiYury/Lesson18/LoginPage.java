@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import io.qameta.allure.*;
 
 import java.time.Duration;
 
@@ -30,6 +31,7 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Открыть страницу авторизации")
     public static LoginPage open(WebDriver driver) {
         driver.get(URL);
         return new LoginPage(driver);
@@ -40,9 +42,11 @@ public class LoginPage {
         passwordField.sendKeys(password);
         signInButton.click();
         try {
+            Allure.step(String.format("Производится авторизация с email \"%s\" и паролем \"%s\"...", email, password));
             return new WebDriverWait(driver, Duration.ofSeconds(2))
                     .until(ExpectedConditions.urlToBe(MainPage.URL));
         } catch (TimeoutException e) {
+            Allure.step(String.format("Авторизация с email \"%s\" и паролем \"%s\" не удалась", email, password));
             return false;
         }
     }
