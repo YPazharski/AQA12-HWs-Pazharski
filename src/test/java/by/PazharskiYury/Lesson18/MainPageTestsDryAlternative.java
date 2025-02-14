@@ -1,8 +1,11 @@
 package by.PazharskiYury.Lesson18;
 
+import by.PazharskiYury.Lesson19.DriverListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.openqa.selenium.support.events.WebDriverListener;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -37,8 +40,10 @@ public class MainPageTestsDryAlternative {
     @BeforeMethod
     @Step("Открыть браузер")
     public void initializeDriver() {
-        driver = new ChromeDriver();
-        driver.manage().window().minimize();
+        WebDriver initDriver = new ChromeDriver();
+        initDriver.manage().window().minimize();
+        WebDriverListener listener = new DriverListener(initDriver);
+        driver = new EventFiringDecorator<>(listener).decorate(initDriver);
     }
 
     @BeforeMethod(dependsOnMethods = "initializeDriver")
