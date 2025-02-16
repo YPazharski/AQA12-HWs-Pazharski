@@ -126,7 +126,7 @@ public class MainPage {
 
         public EditProfileForm writeFieldValue(EditProfileField field, String newValue) {
             WebElement fieldElement = getWebField(field);
-            Allure.step(String.format("Запись значения \"%s\" в поле %s формы редактирования профиля...", newValue, field.name()));
+            Allure.step(String.format("Попытка записи значения \"%s\" в поле %s формы редактирования профиля...", newValue, field.name()));
             return writeFieldValue(fieldElement, newValue);
         }
 

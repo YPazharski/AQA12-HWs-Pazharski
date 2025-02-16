@@ -1,28 +1,24 @@
 package by.PazharskiYury.Lesson18;
 
-import by.PazharskiYury.Lesson19.DriverListener;
+import by.PazharskiYury.Lesson19.SingleWebDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.events.EventFiringDecorator;
-import org.openqa.selenium.support.events.WebDriverListener;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.*;
 import io.qameta.allure.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.Properties;
 import java.util.function.Function;
 
 import static org.testng.Assert.assertEquals;
 import static io.qameta.allure.SeverityLevel.*;
 
-/*
-Tests are the same as in MainPageTests class. I tried to apply DRY there.
-But I am not sure about readability.
-So I left both classes.
- */
 @SuppressWarnings("NewClassNamingConvention")
 @Feature("Окно редактирования профиля")
 public class MainPageTestsDryAlternative {
@@ -35,15 +31,16 @@ public class MainPageTestsDryAlternative {
     @BeforeClass
     public void setupDriver() {
         WebDriverManager.chromedriver().setup();
+        initializeDriver();
+        generateEnvironmentPropertiesForAllure();
+        quitDriver();
     }
 
     @BeforeMethod
     @Step("Открыть браузер")
     public void initializeDriver() {
-        WebDriver initDriver = new ChromeDriver();
-        initDriver.manage().window().minimize();
-        WebDriverListener listener = new DriverListener(initDriver);
-        driver = new EventFiringDecorator<>(listener).decorate(initDriver);
+        driver = SingleWebDriver.getDriver();
+        driver.manage().window().maximize();
     }
 
     @BeforeMethod(dependsOnMethods = "initializeDriver")
@@ -57,7 +54,7 @@ public class MainPageTestsDryAlternative {
     @AfterMethod
     @Step("Закрыть браузер")
     public void quitDriver() {
-        driver.quit();
+        SingleWebDriver.quit();
     }
 
     private void checkValuesAfterWriteToEditProfileFormField(String newValue, String altNewValue,
@@ -97,6 +94,7 @@ public class MainPageTestsDryAlternative {
                 EditProfileField.LAST_NAME,
                 epf -> epf.clickSave().getProfileLastName(),
                 true);
+
     }
 
     @Test
@@ -204,6 +202,26 @@ public class MainPageTestsDryAlternative {
                 EditProfileField.DATE_OF_BIRTH,
                 epf -> epf.clickClose().clickEditProfileButton().getFieldValue(EditProfileField.DATE_OF_BIRTH),
                 false);
+    }
+
+    private void generateEnvironmentPropertiesForAllure() {
+        Properties properties = new Properties();
+        RemoteWebDriver rDriver = (RemoteWebDriver) driver;
+        rDriver.get(LoginPage.URL);
+        Capabilities capabilities = rDriver.getCapabilities();
+        properties.setProperty("os_platform", System.getProperty("os.name"));
+        properties.setProperty("os_version", System.getProperty("os.version"));
+        properties.setProperty("java_version", System.getProperty("java.version"));
+        properties.setProperty("Chrome_version", capabilities.getBrowserVersion());
+
+        try {
+            Files.createDirectories(Paths.get("target/allure-results"));
+            try (FileWriter writer = new FileWriter("target/allure-results/environment.properties")) {
+                properties.store(writer, "Environment Properties");
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
