@@ -1,6 +1,7 @@
 package by.PazharskiYury.Lesson18;
 
 import by.PazharskiYury.Lesson19.SingleWebDriver;
+import by.PazharskiYury.Lesson19.TestLogListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +22,7 @@ import static io.qameta.allure.SeverityLevel.*;
 
 @SuppressWarnings("NewClassNamingConvention")
 @Feature("Окно редактирования профиля")
+@Listeners(TestLogListener.class)
 public class MainPageTestsDryAlternative {
 
     private static final String EMAIL = "okuh@mail.ru";
@@ -32,8 +34,27 @@ public class MainPageTestsDryAlternative {
     public void setupDriver() {
         WebDriverManager.chromedriver().setup();
         initializeDriver();
-        generateEnvironmentPropertiesForAllure();
-        quitDriver();
+    }
+
+    @BeforeClass(dependsOnMethods = "setupDriver")
+    private void generateEnvironmentPropertiesForAllure() {
+        Properties properties = new Properties();
+        RemoteWebDriver rDriver = (RemoteWebDriver) driver;
+        rDriver.get(LoginPage.URL);
+        Capabilities capabilities = rDriver.getCapabilities();
+        properties.setProperty("os_platform", System.getProperty("os.name"));
+        properties.setProperty("os_version", System.getProperty("os.version"));
+        properties.setProperty("java_version", System.getProperty("java.version"));
+        properties.setProperty("Chrome_version", capabilities.getBrowserVersion());
+
+        try {
+            Files.createDirectories(Paths.get("target/allure-results"));
+            try (FileWriter writer = new FileWriter("target/allure-results/environment.properties")) {
+                properties.store(writer, "Environment Properties");
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @BeforeMethod
@@ -202,26 +223,6 @@ public class MainPageTestsDryAlternative {
                 EditProfileField.DATE_OF_BIRTH,
                 epf -> epf.clickClose().clickEditProfileButton().getFieldValue(EditProfileField.DATE_OF_BIRTH),
                 false);
-    }
-
-    private void generateEnvironmentPropertiesForAllure() {
-        Properties properties = new Properties();
-        RemoteWebDriver rDriver = (RemoteWebDriver) driver;
-        rDriver.get(LoginPage.URL);
-        Capabilities capabilities = rDriver.getCapabilities();
-        properties.setProperty("os_platform", System.getProperty("os.name"));
-        properties.setProperty("os_version", System.getProperty("os.version"));
-        properties.setProperty("java_version", System.getProperty("java.version"));
-        properties.setProperty("Chrome_version", capabilities.getBrowserVersion());
-
-        try {
-            Files.createDirectories(Paths.get("target/allure-results"));
-            try (FileWriter writer = new FileWriter("target/allure-results/environment.properties")) {
-                properties.store(writer, "Environment Properties");
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
 }
