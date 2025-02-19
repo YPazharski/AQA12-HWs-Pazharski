@@ -12,5 +12,4 @@ import io.cucumber.testng.CucumberOptions;
         glue = {"by.PazharskiYury.Lesson20"}
 )
 public class CucumberTestRunner extends AbstractTestNGCucumberTests {
-
 }

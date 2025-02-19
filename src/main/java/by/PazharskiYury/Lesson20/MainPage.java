@@ -3,9 +3,6 @@ package by.PazharskiYury.Lesson20;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import org.jetbrains.annotations.Nullable;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Objects;
 
 import static com.codeborne.selenide.Condition.*;
@@ -32,6 +29,7 @@ public class MainPage {
 
     public void signOut() {
         signOutButton
+                .shouldBe(clickable)
                 .click();
         signOutButton.should(disappear);
     }

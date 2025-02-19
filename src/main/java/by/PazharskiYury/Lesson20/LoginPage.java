@@ -1,7 +1,6 @@
 package by.PazharskiYury.Lesson20;
 
 import com.codeborne.selenide.*;
-import org.jetbrains.annotations.Nullable;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.*;
