@@ -64,4 +64,5 @@ public class MainPageInteractionDefinitions {
         assertTrue(currentUrl.toLowerCase().contains("privacy"));
         assertTrue(currentUrl.toLowerCase().contains("policy"));
     }
+
 }
