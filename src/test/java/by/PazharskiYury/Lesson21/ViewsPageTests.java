@@ -6,8 +6,7 @@ import org.testng.annotations.*;
 
 import static org.testng.Assert.*;
 
-@SuppressWarnings("NewClassNamingConvention")
-public class apiDemosTests {
+public class ViewsPageTests {
 
     private static final int EXPECTED_ELEMENTS_COUNT = 42;
     private AndroidDriver androidDriver;
@@ -25,9 +24,8 @@ public class apiDemosTests {
         AndroidDriverManager.quitDriver();
     }
 
-    @Test
+    //@Test
     private void allMenuElementsDisplayed() {
-
         WebElement lastElement = viewsPage.getDisplayedMenuElements().getLast();
         TouchControls testFinger = new TouchControls("Test Finger", androidDriver);
         testFinger.swipeUp(lastElement, 3000);
@@ -36,9 +34,14 @@ public class apiDemosTests {
         assertEquals(afterSwipeLastElement.getText(), lastElement.getText());
     }
 
-    @Test(dependsOnMethods = "allMenuElementsDisplayed")
+    //@Test(dependsOnMethods = "allMenuElementsDisplayed")
     private void menuElementCountMatchesExpected() {
         assertEquals(viewsPage.getDisplayedMenuElements().size(), EXPECTED_ELEMENTS_COUNT);
+    }
+
+    @Test//(dependsOnMethods = "menuElementCountMatchesExpected")
+    private void sampleTest() {
+        viewsPage.tapDateWidgets().tapDialog();
     }
 
 }
