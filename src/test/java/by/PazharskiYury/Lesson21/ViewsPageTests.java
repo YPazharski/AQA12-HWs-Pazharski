@@ -4,6 +4,9 @@ import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import static org.testng.Assert.*;
 
 public class ViewsPageTests {
@@ -39,9 +42,28 @@ public class ViewsPageTests {
         assertEquals(viewsPage.getDisplayedMenuElements().size(), EXPECTED_ELEMENTS_COUNT);
     }
 
-    @Test//(dependsOnMethods = "menuElementCountMatchesExpected")
-    private void sampleTest() {
-        viewsPage.tapDateWidgets().tapDialog();
+    //@Test(dependsOnMethods = "menuElementCountMatchesExpected")
+    private void changedDateIsDisplayed() {
+        LocalDate dateToSet = LocalDate.now().plusDays(1);
+        ApiDemosMainPage.ApiDemosViewsPage.DateWidgetsPage.DialogPage dialogPage = viewsPage
+                .tapDateWidgets()
+                .tapDialog()
+                .tapChangeTheDate()
+                .chooseDate(dateToSet)
+                .tapOk();
+        assertEquals(dialogPage.getDisplayedDateTime().toLocalDate(), dateToSet);
+    }
+
+    //@Test(dependsOnMethods = "menuElementCountMatchesExpected")
+    private void changedTimeIsDisplayed() {
+        LocalTime timeToSet = LocalTime.of(23, 11);
+        ApiDemosMainPage.ApiDemosViewsPage.DateWidgetsPage.DialogPage dialogPage = viewsPage
+                .tapDateWidgets()
+                .tapDialog()
+                .tapChangeTheTimeWithSpinner()
+                .chooseTime(timeToSet)
+                .tapOk();
+        assertEquals(dialogPage.getDisplayedDateTime().toLocalTime(), timeToSet);
     }
 
 }

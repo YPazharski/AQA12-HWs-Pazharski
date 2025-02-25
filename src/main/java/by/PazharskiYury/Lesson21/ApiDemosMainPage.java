@@ -1,13 +1,15 @@
 package by.PazharskiYury.Lesson21;
 
-import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.*;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 public class ApiDemosMainPage {
 
@@ -96,8 +98,18 @@ public class ApiDemosMainPage {
                 @AndroidFindBy(accessibility = "change the time (spinner)")
                 private WebElement changeTheTimeSpinner;
 
+                public final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("M-d-yyyy HH:mm", Locale.UK);
+
                 private DialogPage() {
                     PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(10)), this);
+                }
+
+                public LocalDateTime getDisplayedDateTime() {
+                    return LocalDateTime.parse(getDisplayedDateTimeValue(), DATE_TIME_FORMAT);
+                }
+
+                public String getDisplayedDateTimeValue() {
+                    return dateTimeDisplay.getText();
                 }
 
                 public AndroidCalendar<DialogPage> tapChangeTheDate() {
@@ -106,7 +118,7 @@ public class ApiDemosMainPage {
                 }
 
                 public AndroidTimeSpinner<DialogPage> tapChangeTheTimeWithSpinner() {
-                    forefinger.tap(changeTheDate);
+                    forefinger.tap(changeTheTimeSpinner);
                     return new AndroidTimeSpinner<DialogPage>(this, driver);
                 }
 
