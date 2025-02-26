@@ -7,25 +7,21 @@ import io.appium.java_client.pagefactory.AndroidFindBys;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
 
+@SuppressWarnings("UnusedReturnValue")
 public class AndroidTimeSpinner<I> {
 
-    private I invokeObject;
-    private AndroidDriver driver;
-    private TouchControls timeFinger;
+    private final I invokeObject;
+    private final TouchControls timeFinger;
 
     @AndroidFindBys(value = @AndroidBy(xpath = "//android.widget.LinearLayout[@resource-id=\"android:id/timePickerLayout\"]/android.widget.LinearLayout/android.widget.NumberPicker[1]/*"))
     private List<WebElement> hourSpinner;
 
     @AndroidFindBys(value = @AndroidBy(xpath = "//android.widget.LinearLayout[@resource-id=\"android:id/timePickerLayout\"]/android.widget.LinearLayout/android.widget.NumberPicker[2]/*"))
     private List<WebElement> minuteSpinner;
-
-    @AndroidFindBys(value = @AndroidBy(xpath = "//android.widget.LinearLayout[@resource-id=\"android:id/timePickerLayout\"]/android.widget.NumberPicker/*"))
-    private List<WebElement> timeOfDaySelection;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().text(\"AM\")")
     private WebElement am;
@@ -38,9 +34,8 @@ public class AndroidTimeSpinner<I> {
 
     public AndroidTimeSpinner(I invokeObject, AndroidDriver androidDriver) {
         this.invokeObject = invokeObject;
-        driver = androidDriver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(10)), this);
-        timeFinger = new TouchControls("Time Finger", driver);
+        PageFactory.initElements(new AppiumFieldDecorator(androidDriver, Duration.ofSeconds(10)), this);
+        timeFinger = new TouchControls("Time Finger", androidDriver);
     }
 
     private WebElement getTopHour() {
