@@ -11,7 +11,7 @@ public class Task3Tests {
 
     @BeforeClass
     public void setup() {
-        AndroidDriverManager.setup(AndroidDriverManager.AndroidVirtualDevice.ELEMENT_COUNTER_DEVICE);
+        AndroidDriverManager.setup();
         AndroidDriver androidDriver = AndroidDriverManager.getAndroidDriver();
         textSwitcherPage = new MainPage(androidDriver)
                 .tapViews()

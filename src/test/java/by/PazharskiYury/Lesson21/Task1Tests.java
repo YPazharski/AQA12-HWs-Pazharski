@@ -15,7 +15,7 @@ public class Task1Tests {
 
     @BeforeClass
     public void setup() {
-        AndroidDriverManager.setup(AndroidDriverManager.AndroidVirtualDevice.ELEMENT_COUNTER_DEVICE);
+        AndroidDriverManager.setup();
         androidDriver = AndroidDriverManager.getAndroidDriver();
         viewsPage = new MainPage(androidDriver).tapViews();
     }
