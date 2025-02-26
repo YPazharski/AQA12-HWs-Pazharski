@@ -7,13 +7,13 @@ import static org.testng.Assert.*;
 
 public class Task3Tests {
 
-    private ApiDemosMainPage.ApiDemosViewsPage.TextSwitcherPage textSwitcherPage;
+    private MainPage.ViewsPage.TextSwitcherPage textSwitcherPage;
 
     @BeforeClass
     public void setup() {
         AndroidDriverManager.setup(AndroidDriverManager.AndroidVirtualDevice.ELEMENT_COUNTER_DEVICE);
         AndroidDriver androidDriver = AndroidDriverManager.getAndroidDriver();
-        textSwitcherPage = new ApiDemosMainPage(androidDriver)
+        textSwitcherPage = new MainPage(androidDriver)
                 .tapViews()
                 .tapTextSwitcher();
     }

@@ -11,13 +11,13 @@ public class Task1Tests {
     private static final int EXPECTED_ELEMENTS_COUNT = 42;
 
     private AndroidDriver androidDriver;
-    private ApiDemosMainPage.ApiDemosViewsPage viewsPage;
+    private MainPage.ViewsPage viewsPage;
 
     @BeforeClass
     public void setup() {
         AndroidDriverManager.setup(AndroidDriverManager.AndroidVirtualDevice.ELEMENT_COUNTER_DEVICE);
         androidDriver = AndroidDriverManager.getAndroidDriver();
-        viewsPage = new ApiDemosMainPage(androidDriver).tapViews();
+        viewsPage = new MainPage(androidDriver).tapViews();
     }
 
     @AfterClass

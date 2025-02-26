@@ -14,13 +14,13 @@ public class Task2Tests {
             .withHour(23)
             .withMinute(11);
 
-    private ApiDemosMainPage.ApiDemosViewsPage.DateWidgetsPage.DialogPage dialogPage;
+    private MainPage.ViewsPage.DateWidgetsPage.DialogPage dialogPage;
 
     @BeforeClass
     public void setup() {
         AndroidDriverManager.setup(AndroidDriverManager.AndroidVirtualDevice.ELEMENT_COUNTER_DEVICE);
         AndroidDriver androidDriver = AndroidDriverManager.getAndroidDriver();
-        dialogPage = new ApiDemosMainPage(androidDriver)
+        dialogPage = new MainPage(androidDriver)
                 .tapViews()
                 .tapDateWidgets()
                 .tapDialog();

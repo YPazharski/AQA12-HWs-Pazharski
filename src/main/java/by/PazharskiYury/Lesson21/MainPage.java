@@ -11,7 +11,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
-public class ApiDemosMainPage {
+@SuppressWarnings("unused")
+public class MainPage {
 
     AndroidDriver driver;
     TouchControls forefinger;
@@ -19,18 +20,18 @@ public class ApiDemosMainPage {
     @AndroidFindBy(accessibility = "Views")
     private WebElement views;
 
-    public ApiDemosMainPage(AndroidDriver androidDriver) {
+    public MainPage(AndroidDriver androidDriver) {
         driver = androidDriver;
         PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(10)), this);
         forefinger = new TouchControls("forefinger", driver);
     }
 
-    public ApiDemosViewsPage tapViews() {
+    public ViewsPage tapViews() {
         forefinger.tap(views);
-        return new ApiDemosViewsPage();
+        return new ViewsPage();
     }
 
-    public class ApiDemosViewsPage {
+    public class ViewsPage {
 
         @AndroidFindBys(value = @AndroidBy(xpath = "//android.widget.ListView[@resource-id=\"android:id/list\"]/*"))
         private List<WebElement> displayedMenuElements;
@@ -41,7 +42,7 @@ public class ApiDemosMainPage {
         @AndroidFindBy(accessibility = "TextSwitcher")
         private WebElement textSwitcher;
 
-        private ApiDemosViewsPage() {
+        private ViewsPage() {
             PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(10)), this);
         }
 
@@ -59,6 +60,7 @@ public class ApiDemosMainPage {
             return new TextSwitcherPage();
         }
 
+        @SuppressWarnings("UnusedReturnValue")
         public class TextSwitcherPage {
 
             @AndroidFindBy(accessibility = "Next")
@@ -96,9 +98,9 @@ public class ApiDemosMainPage {
                 return new DialogPage();
             }
 
-            public ApiDemosViewsPage backToViewsPage() {
+            public ViewsPage backToViewsPage() {
                 driver.navigate().back();
-                return ApiDemosViewsPage.this;
+                return ViewsPage.this;
             }
 
             public class DialogPage {
@@ -128,12 +130,12 @@ public class ApiDemosMainPage {
 
                 public AndroidCalendar<DialogPage> tapChangeTheDate() {
                     forefinger.tap(changeTheDate);
-                    return new AndroidCalendar<DialogPage>(this, driver);
+                    return new AndroidCalendar<>(this, driver);
                 }
 
                 public AndroidTimeSpinner<DialogPage> tapChangeTheTimeWithSpinner() {
                     forefinger.tap(changeTheTimeSpinner);
-                    return new AndroidTimeSpinner<DialogPage>(this, driver);
+                    return new AndroidTimeSpinner<>(this, driver);
                 }
 
                 public DateWidgetsPage backToDateWidgetsPage() {
