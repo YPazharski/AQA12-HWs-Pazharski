@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+@SuppressWarnings("UnusedReturnValue")
 public class AndroidCalendar<I> {
 
     private final I invokeObject;

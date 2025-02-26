@@ -4,6 +4,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import org.jetbrains.annotations.Nullable;
 import org.openqa.selenium.Platform;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
