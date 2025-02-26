@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Lesson 21 Test Case" parallel="false">
+    <test name="All tests">
+        <classes>
+            <class name="by.PazharskiYury.Lesson21.Task1Tests"/>
+            <class name="by.PazharskiYury.Lesson21.Task2Tests"/>
+            <class name="by.PazharskiYury.Lesson21.Task3Tests"/>
+        </classes>
+    </test>
+</suite>
