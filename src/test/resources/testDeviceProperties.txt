@@ -1,0 +1,45 @@
+Properties
+avd.ini.displayname              ElementCounterDevice
+avd.ini.encoding                 UTF-8
+AvdId                            ElementCounterDevice
+disk.dataPartition.size          4G
+fastboot.chosenSnapshotFile
+fastboot.forceChosenSnapshotBoot no
+fastboot.forceColdBoot           no
+fastboot.forceFastBoot           yes
+hw.accelerometer                 yes
+hw.arc                           false
+hw.audioInput                    yes
+hw.battery                       yes
+hw.camera.back                   virtualscene
+hw.camera.front                  emulated
+hw.cpu.ncore                     4
+hw.device.hash2                  MD5:03370e82781275b7dc1d06cbd35eb229
+hw.device.manufacturer           User
+hw.device.name                   ElementCounterDevice
+hw.dPad                          no
+hw.gps                           yes
+hw.gpu.enabled                   yes
+hw.gpu.mode                      host
+hw.initialOrientation            portrait
+hw.keyboard                      yes
+hw.lcd.density                   160
+hw.lcd.height                    2200
+hw.lcd.width                     720
+hw.mainKeys                      no
+hw.ramSize                       4096
+hw.sdCard                        yes
+hw.sensors.orientation           yes
+hw.sensors.proximity             yes
+hw.trackBall                     no
+image.androidVersion.api         35
+image.sysdir.1                   system-images\android-35\google_apis\x86_64\
+PlayStore.enabled                false
+runtime.network.latency          none
+runtime.network.speed            full
+showDeviceFrame                  no
+tag.display                      Google APIs
+tag.displaynames                 Google APIs
+tag.id                           google_apis
+tag.ids                          google_apis
+vm.heapSize                      80
