@@ -35,16 +35,4 @@ public class TouchControls {
         swapUp.perform();
     }
 
-    public static void main(String[] args) {
-        int x = 1;
-        int y = 0;
-        int z;
-        for (int i = 0; i < 10 ; i++) {
-            z = x + y;
-            System.out.println(z);
-            x = y;
-            y = z;
-        }
-    }
-
 }

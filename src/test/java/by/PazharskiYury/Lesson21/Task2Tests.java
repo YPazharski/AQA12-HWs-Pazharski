@@ -2,37 +2,41 @@ package by.PazharskiYury.Lesson21;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.time.*;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
-public class ViewsPageTests {
+public class Task2Tests {
 
     private static final int EXPECTED_ELEMENTS_COUNT = 42;
-    private AndroidDriver androidDriver;
-    private ApiDemosMainPage.ApiDemosViewsPage viewsPage;
-    private ApiDemosMainPage.ApiDemosViewsPage.DateWidgetsPage.DialogPage dialogPage;
     private static final LocalDateTime EXPECTED_DATE_TIME = LocalDateTime
             .now(Clock.tickMinutes(ZoneId.systemDefault()))
             .plusDays(1)
             .withHour(23)
             .withMinute(11);
 
-    @BeforeClass
+    private AndroidDriver androidDriver;
+    private ApiDemosMainPage.ApiDemosViewsPage viewsPage;
+    private ApiDemosMainPage.ApiDemosViewsPage.DateWidgetsPage.DialogPage dialogPage;
+
+
+    @BeforeMethod
     private void setup() {
         AndroidDriverManager.setup(AndroidDriverManager.AndroidVirtualDevice.ELEMENT_COUNTER_DEVICE);
         androidDriver = AndroidDriverManager.getAndroidDriver();
         viewsPage = new ApiDemosMainPage(androidDriver).tapViews();
     }
 
-    @AfterClass
+    @AfterMethod
     private void tearDown() {
         AndroidDriverManager.quitDriver();
     }
 
-    @Test (priority = 1)
+    @Test
     private void allMenuElementsDisplayed() {
         WebElement lastElement = viewsPage.getDisplayedMenuElements().getLast();
         TouchControls testFinger = new TouchControls("Test Finger", androidDriver);
@@ -40,14 +44,10 @@ public class ViewsPageTests {
         WebElement afterSwipeLastElement = viewsPage.getDisplayedMenuElements().getLast();
         assertEquals(afterSwipeLastElement.getLocation(), lastElement.getLocation());
         assertEquals(afterSwipeLastElement.getText(), lastElement.getText());
-    }
-
-    @Test(priority = 2)
-    private void menuElementCountMatchesExpected() {
         assertEquals(viewsPage.getDisplayedMenuElements().size(), EXPECTED_ELEMENTS_COUNT);
     }
 
-    @Test(priority = 3)
+    @Test
     private void changedDateIsDisplayed() {
         LocalDate expectedDate = EXPECTED_DATE_TIME.toLocalDate();
         dialogPage = viewsPage
