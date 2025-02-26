@@ -4,8 +4,7 @@ import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 
 import static org.testng.Assert.*;
 
@@ -14,6 +13,12 @@ public class ViewsPageTests {
     private static final int EXPECTED_ELEMENTS_COUNT = 42;
     private AndroidDriver androidDriver;
     private ApiDemosMainPage.ApiDemosViewsPage viewsPage;
+    private ApiDemosMainPage.ApiDemosViewsPage.DateWidgetsPage.DialogPage dialogPage;
+    private static final LocalDateTime EXPECTED_DATE_TIME = LocalDateTime
+            .now(Clock.tickMinutes(ZoneId.systemDefault()))
+            .plusDays(1)
+            .withHour(23)
+            .withMinute(11);
 
     @BeforeClass
     private void setup() {
@@ -27,7 +32,7 @@ public class ViewsPageTests {
         AndroidDriverManager.quitDriver();
     }
 
-    //@Test
+    @Test (priority = 1)
     private void allMenuElementsDisplayed() {
         WebElement lastElement = viewsPage.getDisplayedMenuElements().getLast();
         TouchControls testFinger = new TouchControls("Test Finger", androidDriver);
@@ -37,33 +42,63 @@ public class ViewsPageTests {
         assertEquals(afterSwipeLastElement.getText(), lastElement.getText());
     }
 
-    //@Test(dependsOnMethods = "allMenuElementsDisplayed")
+    @Test(priority = 2)
     private void menuElementCountMatchesExpected() {
         assertEquals(viewsPage.getDisplayedMenuElements().size(), EXPECTED_ELEMENTS_COUNT);
     }
 
-    //@Test(dependsOnMethods = "menuElementCountMatchesExpected")
+    @Test(priority = 3)
     private void changedDateIsDisplayed() {
-        LocalDate dateToSet = LocalDate.now().plusDays(1);
-        ApiDemosMainPage.ApiDemosViewsPage.DateWidgetsPage.DialogPage dialogPage = viewsPage
+        LocalDate expectedDate = EXPECTED_DATE_TIME.toLocalDate();
+        dialogPage = viewsPage
                 .tapDateWidgets()
                 .tapDialog()
                 .tapChangeTheDate()
-                .chooseDate(dateToSet)
+                .chooseDate(expectedDate)
                 .tapOk();
-        assertEquals(dialogPage.getDisplayedDateTime().toLocalDate(), dateToSet);
+        assertEquals(dialogPage.getDisplayedDateTime().toLocalDate(), expectedDate);
     }
 
-    //@Test(dependsOnMethods = "menuElementCountMatchesExpected")
+    @Test(priority = 4)
     private void changedTimeIsDisplayed() {
         LocalTime timeToSet = LocalTime.of(23, 11);
-        ApiDemosMainPage.ApiDemosViewsPage.DateWidgetsPage.DialogPage dialogPage = viewsPage
-                .tapDateWidgets()
-                .tapDialog()
+        dialogPage
                 .tapChangeTheTimeWithSpinner()
                 .chooseTime(timeToSet)
                 .tapOk();
         assertEquals(dialogPage.getDisplayedDateTime().toLocalTime(), timeToSet);
+    }
+
+    @Test(priority = 5)
+    private void changedDateTimeIsDisplayed() {
+        assertEquals(dialogPage.getDisplayedDateTime(), EXPECTED_DATE_TIME);
+    }
+
+    @Test(priority = 6)
+    private void changedDateTimeIsSaved() {
+        LocalDateTime displayedDateTime = dialogPage.backToDateWidgetsPage().tapDialog().getDisplayedDateTime();
+        assertEquals(displayedDateTime, EXPECTED_DATE_TIME);
+    }
+
+    @Test(priority = 7)
+    private void textSwitcherNextButtonIncreasesDisplayedNumberByOne() {
+        ApiDemosMainPage.ApiDemosViewsPage.TextSwitcherPage textSwitcherPage =
+                dialogPage.backToDateWidgetsPage().backToViewsPage().tapTextSwitcher();
+        int initialValue = textSwitcherPage.getDisplayedNumber();
+        int fibbo = 0;
+        int nacci = 1;
+        int tapsCount;
+        for (int i = 0; i < 6; i++) {
+            tapsCount = fibbo + nacci;
+            for (int j = tapsCount; j > 0; j--) {
+                textSwitcherPage.tapNext();
+            }
+            fibbo = nacci;
+            nacci = tapsCount;
+            int displayedNumber = textSwitcherPage.getDisplayedNumber();
+            assertEquals(displayedNumber, initialValue + tapsCount);
+            initialValue = displayedNumber;
+        }
     }
 
 }

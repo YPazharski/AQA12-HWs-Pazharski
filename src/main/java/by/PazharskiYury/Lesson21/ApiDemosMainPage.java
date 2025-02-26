@@ -62,13 +62,22 @@ public class ApiDemosMainPage {
         public class TextSwitcherPage {
 
             @AndroidFindBy(accessibility = "Next")
-            WebElement next;
+            private WebElement next;
 
             @AndroidFindBy(xpath = "//android.widget.TextSwitcher[@resource-id=\"io.appium.android.apis:id/switcher\"]/*")
-            WebElement countDisplay;
+            private WebElement countDisplay;
 
             private TextSwitcherPage() {
                 PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(10)), this);
+            }
+
+            public TextSwitcherPage tapNext() {
+                forefinger.tap(next);
+                return this;
+            }
+
+            public int getDisplayedNumber() {
+                return Integer.parseInt(countDisplay.getText());
             }
 
         }
@@ -85,6 +94,11 @@ public class ApiDemosMainPage {
             public DialogPage tapDialog() {
                 forefinger.tap(dialog);
                 return new DialogPage();
+            }
+
+            public ApiDemosViewsPage backToViewsPage() {
+                driver.navigate().back();
+                return ApiDemosViewsPage.this;
             }
 
             public class DialogPage {
@@ -120,6 +134,11 @@ public class ApiDemosMainPage {
                 public AndroidTimeSpinner<DialogPage> tapChangeTheTimeWithSpinner() {
                     forefinger.tap(changeTheTimeSpinner);
                     return new AndroidTimeSpinner<DialogPage>(this, driver);
+                }
+
+                public DateWidgetsPage backToDateWidgetsPage() {
+                    driver.navigate().back();
+                    return DateWidgetsPage.this;
                 }
 
             }
